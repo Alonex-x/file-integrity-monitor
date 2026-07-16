@@ -1,7 +1,7 @@
 ```markdown
 # File Integrity Monitor
 
-![C++](https://img.shields.io/badge/C++-00599C?style=for-the-badge&logo=c%2B%2B&logoColor=white)
+<img src="https://img.shields.io/badge/C++-00599C?style=for-the-badge&logo=c%2B%2B&logoColor=white" alt="C++">
 
 Herramienta de línea de comandos en C++ para monitorear la integridad de archivos mediante hashes SHA-256. Detecta modificaciones no autorizadas, archivos nuevos y eliminados comparando el estado actual con una línea base.
 
