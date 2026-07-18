@@ -1,0 +1,43 @@
+name: C++ Tests
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Clonar repositorio
+        uses: actions/checkout@v4
+
+      - name: Instalar dependencias del sistema
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libssl-dev libgtest-dev cmake build-essential
+
+      - name: Compilar Google Test
+        run: |
+          cd /usr/src/googletest
+          sudo cmake .
+          sudo make
+          sudo cp lib/*.a /usr/lib
+
+      - name: Compilar el binario principal
+        run: make
+
+      - name: Compilar los tests
+        run: |
+          g++ -std=c++17 -Wall -Wextra -Isrc -c tests/test_sha256.cpp -o test_sha256.o
+          g++ -std=c++17 -Wall -Wextra -Isrc -c tests/test_integrity.cpp -o test_integrity.o
+          g++ -std=c++17 -Wall -Wextra -Isrc -c src/sha256.cpp -o sha256_lib.o
+          g++ -std=c++17 -Wall -Wextra -Isrc -c src/integrity.cpp -o integrity_lib.o
+          g++ test_sha256.o test_integrity.o sha256_lib.o integrity_lib.o \
+              -lgtest -lgtest_main -pthread -lssl -lcrypto \
+              -o run_tests
+
+      - name: Ejecutar tests
+        run: ./run_tests

@@ -49,3 +49,4 @@ Resumen:
 ## Nota
 
 Este proyecto es solo para fines educativos y de auditoría en sistemas propios o con autorización explícita.
+
