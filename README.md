@@ -49,3 +49,7 @@ Resumen:
 
 Este proyecto es solo para fines educativos y de auditoría en sistemas propios o con autorización explícita.
 
+
+---
+
+Este proyecto forma parte del [Ecosistema Nexus](https://github.com/Alonex-x/nexus-agent-api/blob/main/ECOSYSTEM.md).
