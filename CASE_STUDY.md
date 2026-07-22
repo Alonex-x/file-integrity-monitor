@@ -1,7 +1,7 @@
-# Caso de estudio: File Integrity Monitor
+# Case Study: File Integrity Monitor
 
-**Problema.** Cuando un servidor o una carpeta con archivos sensibles es comprometida, uno de los primeros indicios suele ser que algún archivo fue modificado, reemplazado o eliminado sin autorización. Detectar esto a tiempo puede marcar la diferencia entre una alerta temprana y un incidente de seguridad que pasa desapercibido durante semanas.
+**Problem.** Detecting unauthorized changes to critical files is a fundamental security requirement. Manual checks are impractical for large directories, and the time between a malicious modification and its discovery can be days or weeks.
 
-**Solución.** File Integrity Monitor es una herramienta de línea de comandos escrita en C++ que calcula el hash SHA-256 de cada archivo dentro de un directorio y lo guarda como una "línea base" de referencia. En cualquier momento posterior, el usuario puede volver a ejecutar la herramienta en modo de verificación: esta recalcula los hashes actuales y los compara contra la línea base, reportando de forma clara qué archivos fueron modificados, cuáles son nuevos y cuáles desaparecieron.
+**Solution.** File Integrity Monitor calculates SHA-256 hashes of every file in a directory and stores them as a reference baseline. A verification mode recalculates current hashes and compares them against the baseline, clearly reporting any modified, new, or missing files.
 
-**Resultado.** El proyecto ofrece una forma ligera y sin dependencias externas complejas (solo OpenSSL) de vigilar la integridad de un conjunto de archivos, ideal para carpetas de configuración, directorios web o cualquier ubicación donde un cambio inesperado deba llamar la atención de inmediato. Su suite de tests automatizados con Google Test, integrada en un pipeline de CI/CD, garantiza que la lógica de detección siga siendo confiable a medida que el proyecto evoluciona.
+**Result.** The tool provides a lightweight way to audit file integrity, ideal for configuration directories, web roots, or any location where unexpected changes should trigger an immediate alert. Its automated test suite (Google Test + CI/CD) ensures the detection logic remains reliable as the project evolves.
