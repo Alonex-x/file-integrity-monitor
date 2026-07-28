@@ -1,6 +1,6 @@
 CXX = g++
 CXXFLAGS = -std=c++17 -Wall -Wextra -O2
-LDFLAGS = -lssl -lcrypto
+LDFLAGS = -lssl -lcrypto -lsqlite3
 
 TARGET = file-integrity-monitor
 SRC_DIR = src
@@ -29,7 +29,7 @@ run_tests: tests/test_sha256.cpp tests/test_integrity.cpp src/sha256.cpp src/int
 	g++ -std=c++17 -Wall -Wextra -Isrc -c src/sha256.cpp -o sha256_lib.o
 	g++ -std=c++17 -Wall -Wextra -Isrc -c src/integrity.cpp -o integrity_lib.o
 	g++ test_sha256.o test_integrity.o sha256_lib.o integrity_lib.o \
-	    -lgtest -lgtest_main -pthread -lssl -lcrypto \
+	    -lgtest -lgtest_main -pthread -lssl -lcrypto \ -lsqlite3 \
 	    -o run_tests
 
 .PHONY: test
