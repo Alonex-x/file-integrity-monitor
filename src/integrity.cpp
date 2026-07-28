@@ -56,13 +56,13 @@ std::vector<std::string> listarArchivosValidos(const fs::path& directorio, const
 bool generarLineaBase(const std::string& directorio, const std::string& archivoSalida) {
     fs::path rutaDirectorio(directorio);
     if (!fs::exists(rutaDirectorio) || !fs::is_directory(rutaDirectorio)) {
-        std::cerr << "Error: el directorio '" << directorio << "' no existe." << std::endl;
+        std::cerr << "Error: directory '" << directorio << "' does not exist." << std::endl;
         return false;
     }
 
     std::ofstream salida(archivoSalida, std::ios::trunc);
     if (!salida.is_open()) {
-        std::cerr << "Error: no se pudo crear el archivo de salida '" << archivoSalida << "'." << std::endl;
+        std::cerr << "Error: could not create output file '" << archivoSalida << "'." << std::endl;
         return false;
     }
 
@@ -72,7 +72,7 @@ bool generarLineaBase(const std::string& directorio, const std::string& archivoS
         fs::path rutaCompleta = rutaDirectorio / fs::path(rutaRelativa);
         std::string hash = calcularSHA256(rutaCompleta.string());
         if (hash.empty()) {
-            std::cerr << "Advertencia: no se pudo leer el archivo '" << rutaRelativa << "'." << std::endl;
+            std::cerr << "Warning: could not read file '" << rutaRelativa << "'." << std::endl;
             continue;
         }
         salida << hash << " *" << rutaRelativa << "\n";
@@ -80,21 +80,21 @@ bool generarLineaBase(const std::string& directorio, const std::string& archivoS
         ++contador;
     }
     salida.close();
-    std::cout << "Línea base generada: " << archivoSalida
-              << " (" << contador << " archivos procesados)" << std::endl;
+    std::cout << "Baseline generated: " << archivoSalida
+              << " (" << contador << " files processed)" << std::endl;
     return true;
 }
 
 bool verificarIntegridad(const std::string& directorio, const std::string& archivoHashes, bool verbose) {
     fs::path rutaDirectorio(directorio);
     if (!fs::exists(archivoHashes)) {
-        std::cerr << "Error: el archivo de hashes '" << archivoHashes << "' no existe." << std::endl;
+        std::cerr << "Error: hash file '" << archivoHashes << "' does not exist." << std::endl;
         return false;
     }
 
     std::ifstream entrada(archivoHashes);
     if (!entrada.is_open()) {
-        std::cerr << "Error: no se pudo abrir el archivo de hashes '" << archivoHashes << "'." << std::endl;
+        std::cerr << "Error: could not open hash file '" << archivoHashes << "'." << std::endl;
         return false;
     }
 
@@ -106,19 +106,19 @@ bool verificarIntegridad(const std::string& directorio, const std::string& archi
         if (linea.empty()) continue;
         const size_t LONGITUD_HASH = 64;
         if (linea.size() <= LONGITUD_HASH + 2) {
-            std::cerr << "Advertencia: línea " << numeroLinea << " con formato inválido, se ignora." << std::endl;
+            std::cerr << "Warning: line " << numeroLinea << " with invalid format, ignored." << std::endl;
             continue;
         }
         std::string hash = linea.substr(0, LONGITUD_HASH);
         bool hashValido = (hash.size() == LONGITUD_HASH) &&
                            std::all_of(hash.begin(), hash.end(), [](unsigned char c) { return std::isxdigit(c); });
         if (!hashValido || linea[LONGITUD_HASH] != ' ' || linea[LONGITUD_HASH + 1] != '*') {
-            std::cerr << "Advertencia: línea " << numeroLinea << " con formato inválido, se ignora." << std::endl;
+            std::cerr << "Warning: line " << numeroLinea << " with invalid format, ignored." << std::endl;
             continue;
         }
         std::string rutaRelativa = linea.substr(LONGITUD_HASH + 2);
         if (rutaRelativa.empty()) {
-            std::cerr << "Advertencia: línea " << numeroLinea << " con formato inválido, se ignora." << std::endl;
+            std::cerr << "Warning: line " << numeroLinea << " with invalid format, ignored." << std::endl;
             continue;
         }
         entradas.push_back({hash, rutaRelativa});
@@ -158,7 +158,7 @@ bool verificarIntegridad(const std::string& directorio, const std::string& archi
         }
     }
 
-    std::cout << "Resumen:" << std::endl;
+    std::cout << "Summary:" << std::endl;
     std::cout << "  Archivos OK:       " << contadorOk << std::endl;
     std::cout << "  Modificados:       " << contadorModificados << std::endl;
     std::cout << "  Nuevos:            " << contadorNuevos << std::endl;

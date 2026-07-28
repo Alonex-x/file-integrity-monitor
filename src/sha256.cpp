@@ -23,7 +23,7 @@ std::string bytesToHex(const unsigned char* datos, size_t longitud) {
 std::string calcularSHA256(const std::string& rutaArchivo) {
     std::ifstream archivo(rutaArchivo, std::ios::binary);
     if (!archivo.is_open()) {
-        // No se pudo abrir el archivo: se retorna cadena vacía.
+        // Could not open file: returning empty string.
         return std::string();
     }
 
