@@ -18,3 +18,15 @@ cmake -B build && cmake --build build
 ./build/file-integrity-monitor verify /path/to/directory
 
 This project is for educational purposes and auditing on systems you own or have explicit permission to monitor.
+
+
+## Upgrade to Pro
+
+Need more power? The **Pro version** unlocks advanced capabilities: web dashboards, real-time monitoring, scheduled alerts, batch operations, and professional export formats.
+
+[Browse Pro tools on Gumroad](https://alone997.gumroad.com/)
+
+---
+
+*Part of the [Nexus Ecosystem](https://github.com/Alonex-x/Alonex-x).*
+
